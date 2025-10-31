@@ -7,23 +7,47 @@ body {
   font-family: sans-serif;
   background-color: #262626;
   color: #d9d9d9;
-  padding:20px;
-  height:100vh;
+  padding: 20px;
+  height: 100vh;
   display: flex;
   justify-content: center;
- 
 }
 
-header{
+header {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-
+  margin-bottom: 40px;
 }
 
-p {
+header > h1 {
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+header > p {
   margin: 0;
   width: 60%;
 }
 
+.status-popup {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  background-color: #36ac49;
+  border-radius: 8px;
+  width: 250px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.status-popup > h2 {
+  margin: 0;
+  margin-bottom: 10px;
+}
+.status-popup > p {
+font-weight: bold;
+margin: 0;
+}
