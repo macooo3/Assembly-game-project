@@ -40,6 +40,7 @@ header > p {
   border-radius: 8px;
   width: 250px;
   margin: 0 auto;
+  margin-bottom: 10px;
   padding: 20px;
 }
 
@@ -50,4 +51,18 @@ header > p {
 .status-popup > p {
 font-weight: bold;
 margin: 0;
+}
+
+.languages {
+  border: red 2px solid;
+  display:flex;
+  flex-wrap: wrap;
+  max-width: 350px;
+  justify-content: center;
+  margin: 0 auto;
+  gap:5px;
+}
+.language-card {
+  width:auto;
+
 }
