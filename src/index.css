@@ -40,7 +40,7 @@ header > p {
   border-radius: 8px;
   width: 250px;
   margin: 0 auto;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   padding: 20px;
 }
 
@@ -64,5 +64,39 @@ header > p {
 .language-card {
   width: auto;
   border-radius: 3px;
-  padding:5px;
+  padding: 5px;
+}
+
+.word {
+  width: auto;
+  max-width: 350px;
+  margin: 20px auto 20px;
+  gap: 3px;
+  display: flex;
+  justify-content: center;
+}
+
+.word-card {
+  border-bottom: gainsboro solid 3px;
+  padding: 15px;
+  background-color: #181717;
+  font-weight: bold;
+}
+
+.keyboard {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 350px;
+  margin: 0 auto;
+  gap: 5px;
+}
+
+.letterBtn {
+  width: 30px;
+  height: 30px;
+  background-color: #cca938;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor:pointer;
 }
