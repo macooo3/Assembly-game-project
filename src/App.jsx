@@ -2,11 +2,12 @@ import { useState } from "react";
 import Header from "./components/Header";
 import StatusPopup from "./components/StatusPopup";
 import { languages } from "./assets/languages";
+import NewGame from "./components/NewGameBtn";
 
 function App() {
   const [currentWord, setCurrentWord] = useState("react");
-
   const alphabet = "abcdefghijklmopqrstuvwxyz";
+  const [guess, setGuess] = useState([]);
 
   const languageElements = languages.map((lang) => (
     <div
@@ -34,10 +35,20 @@ function App() {
     .toUpperCase()
     .split("")
     .map((letters, index) => (
-      <button key={index} className="letterBtn">
+      <button
+        key={index}
+        className="letterBtn"
+        onClick={() => letterClick(letters)}
+      >
         {letters}
       </button>
     ));
+
+  const letterClick = function (e) {
+    setGuess((prev) => {
+      [prev, e];
+    });
+  };
 
   return (
     <main>
@@ -47,7 +58,7 @@ function App() {
       <section className="word">{guessWord}</section>
       <section className="keyboard">{keyboardBtn}</section>
       <section className="btn">
-        <button className="newGameBtn">New Game</button>
+        <NewGame />
       </section>
     </main>
   );
