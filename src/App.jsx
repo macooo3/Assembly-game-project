@@ -46,6 +46,9 @@ function App() {
       <section className="languages">{languageElements}</section>
       <section className="word">{guessWord}</section>
       <section className="keyboard">{keyboardBtn}</section>
+      <section className="btn">
+        <button className="newGameBtn">New Game</button>
+      </section>
     </main>
   );
 }
