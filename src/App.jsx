@@ -14,19 +14,27 @@ function App() {
   const alphabet = "abcdefghijklmopqrstuvwxyz";
 
   // Derivived Values
-  const wronGuessCount = guess.filter(
+  const wrongGuessCount = guess.filter(
     (list) => !currentWord.includes(list)
   ).length;
 
-  console.log(wronGuessCount);
+  console.log(wrongGuessCount);
 
-  const languageElements = languages.map((lang) => {
+  const languageElements = languages.map((lang, index) => {
     const langStyle = {
       backgroundColor: lang.backgroundColor,
       color: lang.color,
     };
+    const checkGuesstoIndex = index + 1 <= wrongGuessCount;
+
+    console.log(checkGuesstoIndex);
+    const classStyle = clsx({
+      "language-card": true,
+      lost: checkGuesstoIndex,
+    });
+
     return (
-      <div key={lang.name} className="language-card" style={langStyle}>
+      <div key={lang.name} className={classStyle} style={langStyle}>
         {lang.name}
       </div>
     );

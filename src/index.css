@@ -65,21 +65,22 @@ header > p {
   width: auto;
   border-radius: 3px;
   padding: 5px;
+  position: relative;
 }
 .language-card.lost::before {
-    content: "💀";
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-    font-size: 0.85rem;
-    top: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.7);
+  content: "💀";
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  font-size: 0.85rem;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 3px;
 }
-
 
 .word {
   width: auto;
