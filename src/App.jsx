@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import StatusPopup from "./components/StatusPopup";
 import { languages } from "./assets/languages";
 import NewGame from "./components/NewGameBtn";
+import clsx from "clsx";
 
 function App() {
   const [currentWord, setCurrentWord] = useState("react");
@@ -31,25 +32,42 @@ function App() {
       </span>
     ));
 
-  const keyboardBtn = alphabet
-    .toUpperCase()
-    .split("")
-    .map((letters, index) => (
+  const keyboardBtn = alphabet.split("").map((letter, index) => {
+    const isGuessed = guess.includes(letter);
+    const isCorrect = isGuessed && currentWord.includes(letter);
+    const isWrong = isGuessed && !currentWord.includes(letter);
+    const classStyle = clsx({
+      rightLetter: isCorrect,
+      wrongLetter: isWrong,
+    });
+
+    return (
       <button
         key={index}
-        className="letterBtn"
-        onClick={() => letterClick(letters)}
+        onClick={() => letterClick(letter)}
+        className={classStyle}
       >
-        {letters}
+        {letter.toUpperCase()}
       </button>
-    ));
+    );
+  });
 
-  const letterClick = function (e) {
-    setGuess((prev) => {
-      [prev, e];
-    });
+  /* one way of checking if guess exists*/
+  // const letterClick = function (letters) {
+  //   setGuess((prevGuess) => {
+  //     const letterSet = new Set(prevGuess);
+  //     letterSet.add(letters);
+  //     return Array.from(letterSet);
+  //   });
+  // };
+
+  const letterClick = function (letter) {
+    setGuess((prevGuess) =>
+      prevGuess.includes(letter) ? prevGuess : [...prevGuess, letter]
+    );
   };
 
+  console.log(guess);
   return (
     <main>
       <Header />
@@ -57,7 +75,7 @@ function App() {
       <section className="languages">{languageElements}</section>
       <section className="word">{guessWord}</section>
       <section className="keyboard">{keyboardBtn}</section>
-      <section className="btn">
+      <section className="new-btn">
         <NewGame />
       </section>
     </main>

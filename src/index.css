@@ -92,28 +92,38 @@ header > p {
   gap: 5px;
 }
 
-.letterBtn {
+section.keyboard > button {
   width: 35px;
   height: 35px;
   background-color: #cca938;
   border-radius: 5px;
   font-weight: bold;
-  cursor:pointer;
+  cursor: pointer;
 }
 
-.btn {
-  margin:30px auto 0;
+/* Make these selectors more specific so they override the base
+   'section.keyboard > button' background-color when classes are added */
+section.keyboard > button.wrongLetter {
+  background-color: #fa2828;
+}
+
+section.keyboard > button.rightLetter {
+  background-color: #27b83f;
+}
+
+.new-btn {
+  margin: 30px auto 0;
   display: flex;
   justify-content: center;
 }
 
 .newGameBtn {
-  width:200px;
-  height:60px;
+  width: 200px;
+  height: 60px;
   background-color: rgb(0, 132, 255);
   font-size: 1em;
   font-weight: bold;
   border-radius: 5px;
-  border:rgb(0, 132, 255) 2px solid;
+  border: rgb(0, 132, 255) 2px solid;
   cursor: pointer;
 }
