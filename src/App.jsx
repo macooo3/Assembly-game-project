@@ -23,14 +23,15 @@ function App() {
     </div>
   ));
 
-  const guessWord = currentWord
-    .toUpperCase()
-    .split("")
-    .map((word, index) => (
+  const guessWord = currentWord.split("").map((word, index) => {
+    const displayWord = guess.includes(word);
+
+    return (
       <span key={index} className="word-card">
-        {word}
+        {displayWord && word.toUpperCase()}
       </span>
-    ));
+    );
+  });
 
   const keyboardBtn = alphabet.split("").map((letter, index) => {
     const isGuessed = guess.includes(letter);
