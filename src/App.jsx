@@ -6,22 +6,31 @@ import NewGame from "./components/NewGameBtn";
 import clsx from "clsx";
 
 function App() {
+  // State values
   const [currentWord, setCurrentWord] = useState("react");
-  const alphabet = "abcdefghijklmopqrstuvwxyz";
   const [guess, setGuess] = useState([]);
 
-  const languageElements = languages.map((lang) => (
-    <div
-      key={lang.name}
-      className="language-card"
-      style={{
-        backgroundColor: lang.backgroundColor,
-        color: lang.color,
-      }}
-    >
-      {lang.name}
-    </div>
-  ));
+  // Static values
+  const alphabet = "abcdefghijklmopqrstuvwxyz";
+
+  // Derivived Values
+  const wronGuessCount = guess.filter(
+    (list) => !currentWord.includes(list)
+  ).length;
+
+  console.log(wronGuessCount);
+
+  const languageElements = languages.map((lang) => {
+    const langStyle = {
+      backgroundColor: lang.backgroundColor,
+      color: lang.color,
+    };
+    return (
+      <div key={lang.name} className="language-card" style={langStyle}>
+        {lang.name}
+      </div>
+    );
+  });
 
   const guessWord = currentWord.split("").map((word, index) => {
     const displayWord = guess.includes(word);
