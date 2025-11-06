@@ -36,14 +36,22 @@ header > p {
   flex-direction: column;
   text-align: center;
   align-items: center;
-  background-color: #36ac49;
   border-radius: 8px;
   width: 250px;
+  height: 100px;
   margin: 0 auto;
   margin-bottom: 20px;
   padding: 20px;
+  background-color: #262626;
 }
 
+.status-popup.won {
+  background-color: #36ac49;
+}
+
+.status-popup.loss {
+  background-color: #ee3030ff;
+}
 .status-popup > h2 {
   margin: 0;
   margin-bottom: 10px;

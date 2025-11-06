@@ -18,16 +18,21 @@ function App() {
     (list) => !currentWord.includes(list)
   ).length;
 
-  console.log(wrongGuessCount);
+  // const isGameWon = guess.filter((list) => currentWord.includes(list)).length ===
+  //   currentWord.length;
+  const isGameWon = currentWord
+    .split("")
+    .every((letter) => guess.includes(letter));
+  const isGameLoss = languages.length === wrongGuessCount;
+  const isGameOver = isGameLoss || isGameWon;
 
   const languageElements = languages.map((lang, index) => {
     const langStyle = {
       backgroundColor: lang.backgroundColor,
       color: lang.color,
     };
-    const checkGuesstoIndex = index + 1 <= wrongGuessCount;
+    const checkGuesstoIndex = index < wrongGuessCount;
 
-    console.log(checkGuesstoIndex);
     const classStyle = clsx({
       "language-card": true,
       lost: checkGuesstoIndex,
@@ -85,17 +90,25 @@ function App() {
     );
   };
 
-  console.log(guess);
+  const gameStatusColor = clsx("status-popup", {
+    loss: isGameLoss,
+    won: isGameWon,
+  });
+
+  const insertEl = isGameOver
+    ? isGameWon
+      ? { header: "Congratulations", para: "You won the game!" }
+      : { header: "Game Over", para: "You lost try again :(" }
+    : "";
+
   return (
     <main>
       <Header />
-      <StatusPopup />
+      <StatusPopup style={gameStatusColor} insertEl={insertEl} />
       <section className="languages">{languageElements}</section>
       <section className="word">{guessWord}</section>
       <section className="keyboard">{keyboardBtn}</section>
-      <section className="new-btn">
-        <NewGame />
-      </section>
+      <section className="new-btn">{isGameOver && <NewGame />}</section>
     </main>
   );
 }
