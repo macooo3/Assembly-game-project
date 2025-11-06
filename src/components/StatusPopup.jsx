@@ -1,7 +1,7 @@
 export default function StatusPopup({ insertEl, style }) {
-  console.log(insertEl);
+ 
   return (
-    <section className={style}>
+    <section className={style} aria-live="polite" role="status">
       <h2>{insertEl.header}</h2>
       <p>{insertEl.para || insertEl}</p>
     </section>

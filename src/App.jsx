@@ -4,15 +4,16 @@ import StatusPopup from "./components/StatusPopup";
 import { languages } from "./assets/languages";
 import NewGame from "./components/NewGameBtn";
 import clsx from "clsx";
-import getFarewellText from "./assets/utils";
+import { getFarewellText, randomWord } from "./assets/utils";
 
 function App() {
   // State values
-  const [currentWord, setCurrentWord] = useState("react");
+  const [currentWord, setCurrentWord] = useState(() => randomWord());
   const [guess, setGuess] = useState([]);
 
+  console.log(currentWord);
   // Static values
-  const alphabet = "abcdefghijklmopqrstuvwxyz";
+  const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
   // Derivived Values
   const wrongGuessCount = guess.filter(
@@ -22,11 +23,15 @@ function App() {
   const isGameWon = currentWord
     .split("")
     .every((letter) => guess.includes(letter));
-  const isGameLoss = languages.length === wrongGuessCount;
-  const isGameOver = isGameLoss || isGameWon;
   // const isGameWon = guess.filter((list) => currentWord.includes(list)).length ===
   //   currentWord.length;
+  const isGameLoss = languages.length === wrongGuessCount;
+  const isGameOver = isGameLoss || isGameWon;
+  const lastGuess = guess.length > 0 && !currentWord.includes(guess.at(-1));
 
+  console.log(lastGuess);
+
+  // Display Func
   const languageElements = languages.map((lang, index) => {
     const langStyle = {
       backgroundColor: lang.backgroundColor,
@@ -70,6 +75,9 @@ function App() {
         key={index}
         onClick={() => letterClick(letter)}
         className={classStyle}
+        disabled={isGameOver}
+        aria-disabled={guess.includes(letter)}
+        aria-label={`Letter ${letter}`}
       >
         {letter.toUpperCase()}
       </button>
@@ -94,15 +102,19 @@ function App() {
   const gameStatusColor = clsx("status-popup", {
     loss: isGameLoss,
     won: isGameWon,
-    fareWell: !isGameOver && wrongGuessCount >= 1 && wrongGuessCount <= 8,
+    fareWell: !isGameOver && lastGuess,
   });
 
   const insertEl = isGameOver
     ? isGameWon
       ? { header: "Congratulations", para: "You won the game!" }
       : { header: "Game Over", para: "You lost try again :(" }
-    : wrongGuessCount >= 1 &&
-      getFarewellText(languages[wrongGuessCount - 1].name);
+    : lastGuess && getFarewellText(languages[wrongGuessCount - 1].name);
+
+  const createNewGame = function () {
+    setGuess([]);
+    setCurrentWord(() => randomWord());
+  };
 
   return (
     <main>
@@ -110,8 +122,19 @@ function App() {
       <StatusPopup style={gameStatusColor} insertEl={insertEl} />
       <section className="languages">{languageElements}</section>
       <section className="word">{guessWord}</section>
+      <section className="sr-only" aria-live="polite" role="status">
+        <p>
+          Current word:{" "}
+          {currentWord
+            .split("")
+            .map((letter) => (guess.includes(letter) ? letter + "." : "blank."))
+            .join(" ")}
+        </p>
+      </section>
       <section className="keyboard">{keyboardBtn}</section>
-      <section className="new-btn">{isGameOver && <NewGame />}</section>
+      <section className="new-btn">
+        {isGameOver && <NewGame onClick={createNewGame} />}
+      </section>
     </main>
   );
 }
