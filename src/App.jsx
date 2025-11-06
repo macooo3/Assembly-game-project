@@ -4,6 +4,7 @@ import StatusPopup from "./components/StatusPopup";
 import { languages } from "./assets/languages";
 import NewGame from "./components/NewGameBtn";
 import clsx from "clsx";
+import getFarewellText from "./assets/utils";
 
 function App() {
   // State values
@@ -18,13 +19,13 @@ function App() {
     (list) => !currentWord.includes(list)
   ).length;
 
-  // const isGameWon = guess.filter((list) => currentWord.includes(list)).length ===
-  //   currentWord.length;
   const isGameWon = currentWord
     .split("")
     .every((letter) => guess.includes(letter));
   const isGameLoss = languages.length === wrongGuessCount;
   const isGameOver = isGameLoss || isGameWon;
+  // const isGameWon = guess.filter((list) => currentWord.includes(list)).length ===
+  //   currentWord.length;
 
   const languageElements = languages.map((lang, index) => {
     const langStyle = {
@@ -93,13 +94,15 @@ function App() {
   const gameStatusColor = clsx("status-popup", {
     loss: isGameLoss,
     won: isGameWon,
+    fareWell: !isGameOver && wrongGuessCount >= 1 && wrongGuessCount <= 8,
   });
 
   const insertEl = isGameOver
     ? isGameWon
       ? { header: "Congratulations", para: "You won the game!" }
       : { header: "Game Over", para: "You lost try again :(" }
-    : "";
+    : wrongGuessCount >= 1 &&
+      getFarewellText(languages[wrongGuessCount - 1].name);
 
   return (
     <main>

@@ -52,6 +52,11 @@ header > p {
 .status-popup.loss {
   background-color: #ee3030ff;
 }
+
+.status-popup.fareWell {
+  background-color: #a444c2;
+}
+
 .status-popup > h2 {
   margin: 0;
   margin-bottom: 10px;
