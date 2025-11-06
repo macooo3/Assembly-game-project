@@ -29,8 +29,6 @@ function App() {
   const isGameOver = isGameLoss || isGameWon;
   const lastGuess = guess.length > 0 && !currentWord.includes(guess.at(-1));
 
-  console.log(lastGuess);
-
   // Display Func
   const languageElements = languages.map((lang, index) => {
     const langStyle = {
@@ -53,10 +51,12 @@ function App() {
 
   const guessWord = currentWord.split("").map((word, index) => {
     const displayWord = guess.includes(word);
-
+    const letterColor = clsx({ "word-card": true, lost: isGameLoss && !displayWord });
+   
     return (
-      <span key={index} className="word-card">
-        {displayWord && word.toUpperCase()}
+      <span key={index} className={letterColor}>
+        {(displayWord && word.toUpperCase()) ||
+          (isGameLoss && word.toUpperCase())}
       </span>
     );
   });
@@ -112,8 +112,8 @@ function App() {
     : lastGuess && getFarewellText(languages[wrongGuessCount - 1].name);
 
   const createNewGame = function () {
-    setGuess([]);
     setCurrentWord(() => randomWord());
+    setGuess([]);
   };
 
   return (
@@ -133,7 +133,7 @@ function App() {
       </section>
       <section className="keyboard">{keyboardBtn}</section>
       <section className="new-btn">
-        {isGameOver && <NewGame onClick={createNewGame} />}
+        {isGameOver && <NewGame newGame={createNewGame} />}
       </section>
     </main>
   );
