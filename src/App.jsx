@@ -5,15 +5,17 @@ import { languages } from "./assets/languages";
 import NewGame from "./components/NewGameBtn";
 import clsx from "clsx";
 import { getFarewellText, randomWord } from "./assets/utils";
+import { useWindowSize } from "react-use";
+import Confetti from "react-confetti";
 
 function App() {
   // State values
   const [currentWord, setCurrentWord] = useState(() => randomWord());
   const [guess, setGuess] = useState([]);
 
-  console.log(currentWord);
   // Static values
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
+  const { width, height } = useWindowSize();
 
   // Derivived Values
   const wrongGuessCount = guess.filter(
@@ -51,8 +53,11 @@ function App() {
 
   const guessWord = currentWord.split("").map((word, index) => {
     const displayWord = guess.includes(word);
-    const letterColor = clsx({ "word-card": true, lost: isGameLoss && !displayWord });
-   
+    const letterColor = clsx({
+      "word-card": true,
+      lost: isGameLoss && !displayWord,
+    });
+
     return (
       <span key={index} className={letterColor}>
         {(displayWord && word.toUpperCase()) ||
@@ -135,6 +140,9 @@ function App() {
       <section className="new-btn">
         {isGameOver && <NewGame newGame={createNewGame} />}
       </section>
+      {isGameWon && (
+        <Confetti width={width} height={height} numberOfPieces={1000} />
+      )}
     </main>
   );
 }
